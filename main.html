@@ -4,19 +4,18 @@
   <meta charset="UTF-8" />
   <title>Te Amo Aris</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Fuente kawaii suave -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg: #e8dff3;              /* lavanda suave */
-      --bg-soft: #ead7e6;         /* rosa lavanda */
-      --card: #f6e9f4;            /* rosa crema calmado */
-      --accent: #e8a2c1;          /* rosa viejo suave */
+      --bg: #e8dff3;             
+      --bg-soft: #ead7e6;        
+      --card: #f6e9f4;           
+      --accent: #e8a2c1;          
       --accent-soft: #f3c7db;
-      --text-main: #4f3e50;       /* gris ciruela suave */
+      --text-main: #4f3e50;       
       --text-soft: #7d6b7e;
       --radius-xl: 30px;
       --radius-md: 18px;
@@ -243,11 +242,10 @@
       color: var(--text-soft);
     }
 
-    /* Páginas */
   .pages {
     position: relative;
     min-height: 360px;
-    overflow-y: auto;        /* permite scroll */
+    overflow-y: auto;       
     overflow-x: hidden;
   }
 
@@ -255,7 +253,7 @@
   .page {
     position: absolute;
     inset: 0;
-    overflow-y: auto;      /* ← scroll REAL dentro de cada página */
+    overflow-y: auto;      
     padding-bottom: 40px; 
     opacity: 0;
     pointer-events: none;
@@ -312,7 +310,7 @@
 
   .pages::-webkit-scrollbar-track,
   .page::-webkit-scrollbar-track {
-    background: #f9e4f7;           /* pastel suave */
+    background: #f9e4f7;       
     border-radius: 999px;
   }
 
@@ -320,12 +318,12 @@
   .page::-webkit-scrollbar-thumb {
     background: linear-gradient(135deg, #ff9fc8, #ffcfe4); 
     border-radius: 999px;
-    border: 2px solid #f9e4f7;      /* borde que da efecto "grosor cute" */
+    border: 2px solid #f9e4f7;  
   }
 
   .pages::-webkit-scrollbar-thumb:hover,
   .page::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(135deg, #ff8cbf, #ffb6da); /* más brillante al pasar */
+    background: linear-gradient(135deg, #ff8cbf, #ffb6da); 
   }
 
     .page-inner {
@@ -364,9 +362,8 @@
     letter-spacing: 0.03em;
     background: linear-gradient(135deg, #ff8bb6, #ffb8d7);
 
-    /* versiones estandar + webkit */
-    background-clip: text;              /* estándar */
-    -webkit-background-clip: text;      /* compatibilidad */
+    background-clip: text;             
+    -webkit-background-clip: text;      
     -webkit-text-fill-color: transparent;
   }
 
@@ -431,7 +428,6 @@
       text-align: center;
     }
 
-    /* Página 2: artistas + pusheen selector */
     .pill-row {
       display: flex;
       flex-wrap: wrap;
@@ -505,7 +501,6 @@
       height: 160px;
     }
 
-    /* Página 3: canciones/memorias */
     .memory-list {
       margin-top: 8px;
       display: flex;
@@ -579,7 +574,6 @@
       min-height: 80px;
     }
 
-    /* Página 4: fechas importantes */
     .timeline {
       margin-top: 8px;
       border-left: 2px solid #f0b8da;
@@ -614,7 +608,6 @@
       font-size: 0.9rem;
     }
 
-    /* Página 5: momentos pequeñitos */
     .moment-list {
       margin-top: 8px;
       display: grid;
@@ -636,7 +629,6 @@
       font-size: 0.88rem;
     }
 
-    /* Página 6: final con mensaje secreto */
     .center {
       display: flex;
       flex-direction: column;
@@ -694,7 +686,6 @@
   100% { opacity: 1; transform: scale(1); }
 }
 
-    /* scroll finito para el mensaje secreto */
     .secret.visible::-webkit-scrollbar {
       width: 6px;
     }
@@ -707,7 +698,6 @@
       border-radius: 999px;
     }
 
-    /* Animación cute para Pusheen */
     @keyframes pusheenFadeIn {
       0% {
         opacity: 0;
@@ -724,7 +714,6 @@
 }
 
 
-    /* Footer */
     .book-footer {
       padding: 10px 26px 14px;
       display: flex;
@@ -755,7 +744,6 @@
       color: var(--text-main);
     }
 
-    /* INTRO */
 #intro-screen {
   position: fixed;
   inset: 0;
@@ -825,10 +813,6 @@
       color: var(--text-soft);
     }
 
-    /* ========================= */
-/*          INTRO            */
-/* ========================= */
-
 #intro-screen {
   position: fixed;
   inset: 0;
@@ -884,7 +868,7 @@
   width: 100px;
   opacity: 0.95;
   display: block;
-  margin: 0 auto 18px auto;   /* centrada + separación debajo */
+  margin: 0 auto 18px auto;  
 }
 
   </style>
@@ -986,9 +970,7 @@
         </div>
       </aside>
 
-      <!-- Páginas -->
       <section class="pages">
-        <!-- Página 1 -->
         <section class="page active" data-page="0">
           <div class="page-inner">
             <div>
@@ -1024,7 +1006,6 @@
           </div>
         </section>
 
-        <!-- Página 2 -->
         <section class="page" data-page="1">
           <div class="page-inner">
             <div>
@@ -1039,7 +1020,6 @@
               </p>
 
               <div class="pill-row">
-                <!-- Cambiá los nombres por artistas reales -->
                 <button class="artist-pill active" data-artist="a1">SALAS FLACO</button>
                 <button class="artist-pill" data-artist="a2">THE MARIAS</button>
                 <button class="artist-pill" data-artist="a3">LIL PEEP</button>
@@ -1077,7 +1057,6 @@
           </div>
         </section>
 
-        <!-- Página 3 -->
         <section class="page" data-page="2">
           <div class="page-inner">
             <div>
@@ -1092,7 +1071,6 @@
               </p>
 
               <div class="memory-list">
-                <!-- Cambiá por canciones/recuerdos reales -->
                 <div class="memory-item" data-memory="m1">
                   <span>El Palacio · Cerounno</span>
                   <span class="tag">primer recuerdo</span>
@@ -1125,7 +1103,6 @@
           </div>
         </section>
 
-        <!-- Página 4: Fechas especiales -->
         <section class="page" data-page="3">
           <div class="page-inner">
             <div>
@@ -1180,7 +1157,6 @@ Hay días que no se me borran más, que quedaron guardados como si mi memoria su
           </div>
         </section>
 
-        <!-- Página 5: Momentos chiquitos -->
         <section class="page" data-page="4">
           <div class="page-inner">
             <div>
@@ -1238,7 +1214,6 @@ Hay días que no se me borran más, que quedaron guardados como si mi memoria su
           </div>
         </section>
 
-        <!-- Página 6: Final -->
         <section class="page" data-page="5">
           <div class="page-inner">
             <div class="center">
@@ -1313,7 +1288,6 @@ Hay días que no se me borran más, que quedaron guardados como si mi memoria su
   </div>
 
   <script>
-    // Navegación de páginas
     const pages = Array.from(document.querySelectorAll(".page"));
     const dots = Array.from(document.querySelectorAll(".dot"));
     const chapterBtns = Array.from(document.querySelectorAll(".chapter-btn"));
@@ -1352,7 +1326,6 @@ Hay días que no se me borran más, que quedaron guardados como si mi memoria su
       if (e.key === "ArrowLeft") goToPage(currentPage - 1);
     });
 
-    // Artistas – mensajes
     const artistPills = Array.from(document.querySelectorAll(".artist-pill"));
     const artistMessage = document.getElementById("artist-message");
 
@@ -1367,11 +1340,9 @@ Hay días que no se me borran más, que quedaron guardados como si mi memoria su
       pill.addEventListener("click", () => {
         const key = pill.dataset.artist;
 
-        // cambiar el estilo activo
         artistPills.forEach((p) => p.classList.remove("active"));
         pill.classList.add("active");
 
-        // animación: fade out → cambiar texto → fade in
         artistMessage.classList.remove("fade-in");
         artistMessage.classList.add("fade-out");
 
@@ -1379,13 +1350,11 @@ Hay días que no se me borran más, que quedaron guardados como si mi memoria su
           artistMessage.textContent = artistTexts[key];
           artistMessage.classList.remove("fade-out");
           artistMessage.classList.add("fade-in");
-        }, 350); // coincide con el tiempo de la animación CSS
+        }, 350); 
       });
     });
 
 
-    // Selector de Pusheen
-// Selector de Pusheen (versión música)
       const pusheenThumbs = Array.from(document.querySelectorAll(".pusheen-thumb"));
       const pusheenMainImg = document.getElementById("pusheen-main-img");
 
@@ -1401,16 +1370,13 @@ Hay días que no se me borran más, que quedaron guardados como si mi memoria su
           pusheenThumbs.forEach((t) => t.classList.remove("active"));
           thumb.classList.add("active");
 
-          // Nueva línea – usa tus archivos
           pusheenMainImg.classList.remove("pusheen-animate"); 
-          void pusheenMainImg.offsetWidth; // fuerza reinicio de animación
+          void pusheenMainImg.offsetWidth; 
           pusheenMainImg.src = pusheenStyles[id];
           pusheenMainImg.classList.add("pusheen-animate");
         });
       });
 
-
-    // Memorias/canciones
     const memoryItems = Array.from(document.querySelectorAll(".memory-item"));
     const memoryText = document.getElementById("memory-text");
 
@@ -1428,7 +1394,6 @@ Hay días que no se me borran más, que quedaron guardados como si mi memoria su
         memoryItems.forEach((i) => i.classList.remove("active"));
         item.classList.add("active");
 
-        // Animación del texto
         memoryText.classList.remove("fade-in");
         memoryText.classList.add("fade-out");
 
@@ -1440,8 +1405,6 @@ Hay días que no se me borran más, que quedaron guardados como si mi memoria su
       });
     });
 
-
-    // Mensaje secreto final
     const heartBtn = document.getElementById("heart-btn");
     const secretText = document.getElementById("secret-text");
 
@@ -1449,14 +1412,9 @@ Hay días que no se me borran más, que quedaron guardados como si mi memoria su
       secretText.classList.toggle("visible");
     });
 
-/* ============================= */
-/* INTRO: Música + typing effect */
-/* ============================= */
-
     const intro = document.getElementById("intro-screen");
     const startBtn = document.getElementById("start-btn");
 
-    // Música suave
     const audio = new Audio("music.mp3");
     audio.loop = true;
 
@@ -1473,3 +1431,4 @@ Hay días que no se me borran más, que quedaron guardados como si mi memoria su
   </script>
 </body>
 </html>
+
