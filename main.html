@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Te Amo Aris</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Fuente kawaii suave -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #e8dff3;              /* lavanda suave */
+      --bg-soft: #ead7e6;         /* rosa lavanda */
+      --card: #f6e9f4;            /* rosa crema calmado */
+      --accent: #e8a2c1;          /* rosa viejo suave */
+      --accent-soft: #f3c7db;
+      --text-main: #4f3e50;       /* gris ciruela suave */
+      --text-soft: #7d6b7e;
+      --radius-xl: 30px;
+      --radius-md: 18px;
+      --shadow-soft: 0 24px 55px rgba(80, 60, 90, 0.25);
+    }
+
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: "Baloo 2", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #d8c7ea, #f0d7e9);
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+
+    .bubble-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0.6;
+    }
+
+    .bubble {
+      position: absolute;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, #ffffff, #f4c9e6);
+      filter: blur(1px);
+      animation: float 26s linear infinite;
+    }
+
+    .bubble:nth-child(1) { width: 260px; height: 260px; top: -70px; left: -40px; }
+    .bubble:nth-child(2) { width: 300px; height: 300px; bottom: -90px; right: -40px; animation-duration: 32s; }
+    .bubble:nth-child(3) { width: 180px; height: 180px; top: 45%; left: -70px; animation-duration: 30s; }
+    .bubble:nth-child(4) { width: 200px; height: 200px; bottom: 15%; right: 14%; animation-duration: 34s; }
+
+    @keyframes float {
+      from { transform: translateY(0); }
+      50% { transform: translateY(-18px); }
+      to { transform: translateY(0); }
+    }
+
+    .book {
+      max-width: 1150px;
+      width: 100%;
+      background: rgba(252, 240, 248, 0.96);
+      border-radius: 36px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(204, 160, 210, 0.45);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      backdrop-filter: blur(14px);
+    }
+
+    .book-header {
+      padding: 18px 26px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(
+        to right,
+        rgba(250, 218, 238, 0.95),
+        rgba(248, 234, 255, 0.9)
+      );
+      border-bottom: 1px solid rgba(204, 160, 210, 0.35);
+    }
+
+    .book-title-main {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .book-title-main h1 {
+      font-size: 1.5rem;
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .book-title-main h1 span.emoji {
+      font-size: 1.7rem;
+    }
+
+    .book-title-main p {
+      font-size: 0.9rem;
+      color: var(--text-soft);
+    }
+
+    .page-indicator {
+      padding: 7px 13px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(255, 192, 203, 0.6);
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dots {
+      display: flex;
+      gap: 4px;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #efd0e3;
+      transition: 180ms ease;
+    }
+
+    .dot.active {
+      width: 18px;
+      background: linear-gradient(135deg, #ff9fb5, #ffc6dd);
+    }
+
+    .book-main {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      padding: 20px 26px 16px 26px;
+      gap: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .book-main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Sidebar */
+    .sidebar {
+      border-radius: 34px;
+      background: rgba(250, 225, 239, 0.9);
+      box-shadow: 0 0 20px rgba(255, 170, 210, 0.22);
+      background: rgba(250, 231, 244, 0.96);
+      border-radius: 26px;
+      border: 1px solid rgba(226, 179, 215, 0.7);
+      padding: 12px 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .sidebar-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-soft);
+    }
+
+    .chapter-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .chapter-btn {
+      width: 100%;
+      border-radius: 999px;
+      border: none;
+      background: transparent;
+      padding: 7px 10px;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      color: var(--text-soft);
+      transition: 150ms ease;
+    }
+
+    .chapter-bullet {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      border: 2px solid #f6bed6;
+      background: #fff7fb;
+      flex-shrink: 0;
+    }
+
+    .chapter-btn.active {
+      background: #ffe0f1;
+      color: var(--text-main);
+    }
+
+    .chapter-btn.active .chapter-bullet {
+      background: #ff9fb5;
+    }
+
+    .pusheen-preview {
+      margin-top: 8px;
+      padding: 10px 10px 8px;
+      border-radius: var(--radius-md);
+      background: #fce9f6;
+      border: 1px dashed rgba(212, 147, 189, 0.9);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pusheen-preview img {
+      width: 52px;
+      height: 52px;
+      object-fit: contain;
+    }
+
+    .pusheen-preview p {
+      font-size: 0.78rem;
+      color: var(--text-soft);
+    }
+
+    /* Páginas */
+  .pages {
+    position: relative;
+    min-height: 360px;
+    overflow-y: auto;        /* permite scroll */
+    overflow-x: hidden;
+  }
+
+
+  .page {
+    position: absolute;
+    inset: 0;
+    overflow-y: auto;      /* ← scroll REAL dentro de cada página */
+    padding-bottom: 40px; 
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(32px);
+  }
+
+
+    .page.active {
+      animation: pageIn 0.35s ease-out;
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(0);
+    }
+
+    @keyframes pageIn {
+  0% { opacity: 0; transform: translateX(22px) scale(0.98); }
+  100% { opacity: 1; transform: translateX(0) scale(1); }
+}
+    
+      .heart-particles {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .heart-particles::before,
+  .heart-particles::after {
+    content: "💗";
+    position: absolute;
+    font-size: 28px;
+    opacity: 0.4;
+    animation: floatHearts 14s infinite ease-in-out;
+  }
+
+  .heart-particles::after {
+    left: 80%;
+    top: 20%;
+    animation-duration: 18s;
+    opacity: 0.35;
+  }
+
+  @keyframes floatHearts {
+    0% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-20px) scale(1.15); opacity: .6; }
+    100% { transform: translateY(0) scale(1); }
+  }
+
+
+      .pages::-webkit-scrollbar,
+  .page::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  .pages::-webkit-scrollbar-track,
+  .page::-webkit-scrollbar-track {
+    background: #f9e4f7;           /* pastel suave */
+    border-radius: 999px;
+  }
+
+  .pages::-webkit-scrollbar-thumb,
+  .page::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #ff9fc8, #ffcfe4); 
+    border-radius: 999px;
+    border: 2px solid #f9e4f7;      /* borde que da efecto "grosor cute" */
+  }
+
+  .pages::-webkit-scrollbar-thumb:hover,
+  .page::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #ff8cbf, #ffb6da); /* más brillante al pasar */
+  }
+
+    .page-inner {
+    box-shadow: 0 0 22px rgba(255, 182, 206, 0.35);
+      background: var(--card);
+      border-radius: 28px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid #f2cfe4;
+      padding: 20px 20px 16px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+      gap: 18px;
+      min-height: 360px;
+      overflow-y: visible;
+    }
+
+    @media (max-width: 900px) {
+      .page-inner {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .page-header {
+      margin-bottom: 8px;
+    }
+
+    .page-tag {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-soft);
+    }
+
+  .page-title {
+    font-size: 1.45rem;
+    letter-spacing: 0.03em;
+    background: linear-gradient(135deg, #ff8bb6, #ffb8d7);
+
+    /* versiones estandar + webkit */
+    background-clip: text;              /* estándar */
+    -webkit-background-clip: text;      /* compatibilidad */
+    -webkit-text-fill-color: transparent;
+  }
+
+
+      .chapter-btn:hover {
+    transform: translateX(4px);
+    background: #ffe8f3;
+  }
+
+
+    .page-text {
+      font-size: 0.96rem;
+      line-height: 1.7;
+      margin-top: 6px;
+    }
+
+    .soft {
+      color: var(--text-soft);
+    }
+
+    .highlight {
+      color: #ff6b9c;
+    }
+
+    .card-soft {
+      margin-top: 10px;
+      background: var(--bg-soft);
+      border-radius: var(--radius-md);
+      padding: 10px 12px;
+      font-size: 0.87rem;
+      border: 1px solid rgba(225, 160, 201, 0.7);
+    }
+
+    .img-frame {
+      border-radius: 22px;
+      background: #fbe9f6;
+      border: 1px solid #f2cfe4;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .img-frame img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .img-caption {
+      position: absolute;
+      bottom: 8px;
+      left: 12px;
+      right: 12px;
+      font-size: 0.8rem;
+      color: #6d5868;
+      background: rgba(255, 246, 252, 0.96);
+      border-radius: 999px;
+      padding: 4px 10px;
+      text-align: center;
+    }
+
+    /* Página 2: artistas + pusheen selector */
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .artist-pill {
+      border-radius: 999px;
+      border: 1px solid #f1c1de;
+      background: #fff7fb;
+      padding: 6px 10px;
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      cursor: pointer;
+      transition: 150ms ease;
+    }
+
+    .artist-pill.active {
+      background: #ffe6f1;
+      color: var(--text-main);
+      border-color: #ff9fb5;
+    }
+
+    .artist-message {
+      font-size: 0.87rem;
+      margin-top: 8px;
+      color: var(--text-main);
+      min-height: 58px;
+    }
+
+    .pusheen-selector {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pusheen-options {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+    }
+
+    .pusheen-thumb {
+      width: 72px;
+      height: 72px;
+      border-radius: 20px;
+      padding: 5px;
+      border: 2px solid transparent;
+      background: #fbe8f5;
+      cursor: pointer;
+      transition: 150ms ease;
+    }
+
+    .pusheen-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .pusheen-thumb.active {
+      border-color: #ff9fb5;
+      box-shadow: 0 0 0 3px #ffe2f0;
+    }
+
+    .pusheen-main {
+      filter: drop-shadow(0 0 12px rgba(255, 165, 205, 0.5));
+      width: 160px;
+      height: 160px;
+    }
+
+    /* Página 3: canciones/memorias */
+    .memory-list {
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .memory-item {
+      transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+      border-radius: 18px;
+      background: #fff7fa;
+      border: 1px solid #f1c4e0;
+      padding: 8px 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: 150ms ease;
+    }
+
+        .artist-message {
+      opacity: 1;
+      transition: opacity 0.45s ease, transform 0.45s ease;
+    }
+
+    .artist-message.fade-out {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+
+    .artist-message.fade-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .memory-item span.tag {
+      font-size: 0.75rem;
+      color: var(--text-soft);
+      background: #ffeef6;
+      border-radius: 999px;
+      padding: 3px 8px;
+    }
+
+        .memory-text {
+      opacity: 1;
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .memory-text.fade-out {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+
+    .memory-text.fade-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .memory-item.active {
+      transform: translateX(4px) scale(1.02);
+      background: #ffe2f2;
+      border-color: #ff9fb5;
+      box-shadow: 0 6px 14px rgba(255, 150, 190, 0.25);
+    }
+
+    .memory-text {
+      margin-top: 8px;
+      font-size: 0.9rem;
+      color: var(--text-main);
+      min-height: 80px;
+    }
+
+    /* Página 4: fechas importantes */
+    .timeline {
+      margin-top: 8px;
+      border-left: 2px solid #f0b8da;
+      padding-left: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .timeline-item {
+      position: relative;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -15px;
+      top: 4px;
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: #ff9fb5;
+      box-shadow: 0 0 0 3px #ffe1f0;
+    }
+
+    .timeline-date {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+
+    .timeline-text {
+      font-size: 0.9rem;
+    }
+
+    /* Página 5: momentos pequeñitos */
+    .moment-list {
+      margin-top: 8px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    @media (max-width: 700px) {
+      .moment-list {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .moment-card {
+      background: #fff7fb;
+      border-radius: 18px;
+      border: 1px solid #f1c4e0;
+      padding: 8px 10px;
+      font-size: 0.88rem;
+    }
+
+    /* Página 6: final con mensaje secreto */
+    .center {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .big-heart-btn {
+      border-radius: 999px;
+      border: none;
+      padding: 8px 14px;
+      background: linear-gradient(135deg, #ff9fb5, #ffc6dd);
+      color: #5b3e4b;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 16px 28px rgba(255, 151, 180, 0.4);
+      transition: 150ms ease;
+    }
+
+    .big-heart-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 20px 32px rgba(255, 151, 180, 0.5);
+    }
+
+    .big-heart-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 12px 20px rgba(255, 151, 180, 0.35);
+    }
+
+    .secret {
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: 230ms ease;
+      font-size: 0.95rem;
+      background: #fbe7f5;
+      border-radius: 18px;
+      border: 1px solid #f1c4e0;
+      margin-top: 4px;
+      padding: 0 0;
+    }
+
+    .secret.visible {
+      animation: secretFade 0.4s ease-out;
+      opacity: 1;
+      max-height: 260px;
+      padding: 10px 12px;
+      overflow-y: auto;
+    }
+    
+    @keyframes secretFade {
+  0% { opacity: 0; transform: scale(0.97); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+    /* scroll finito para el mensaje secreto */
+    .secret.visible::-webkit-scrollbar {
+      width: 6px;
+    }
+    .secret.visible::-webkit-scrollbar-track {
+      background: #f5d9ec;
+      border-radius: 999px;
+    }
+    .secret.visible::-webkit-scrollbar-thumb {
+      background: #e89abf;
+      border-radius: 999px;
+    }
+
+    /* Animación cute para Pusheen */
+    @keyframes pusheenFadeIn {
+      0% {
+        opacity: 0;
+        transform: scale(1.05);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+.pusheen-animate {
+  animation: pusheenFadeIn 0.35s ease-out;
+}
+
+
+    /* Footer */
+    .book-footer {
+      padding: 10px 26px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(204, 160, 210, 0.45);
+      background: rgba(247, 232, 248, 0.97);
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .nav-btn {
+      border-radius: 999px;
+      border: 1px solid #f1c4e0;
+      background: #fdf1f8;
+      padding: 5px 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: 150ms ease;
+      color: var(--text-main);
+    }
+
+    /* INTRO */
+#intro-screen {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #bfa9e8, #f1c4d9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.6s ease;
+}
+
+.intro-content {
+  text-align: center;
+  color: #fff;
+  font-family: "Baloo 2";
+  padding: 40px 50px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  border-radius: 28px;
+  box-shadow: 0 0 40px rgba(255, 150, 200, 0.35);
+}
+
+#intro-screen h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+#intro-screen p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin-bottom: 20px;
+}
+
+#start-btn {
+  border: none;
+  padding: 12px 26px;
+  font-size: 1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ff9fc8, #ffbddb);
+  color: #5a4557;
+  box-shadow: 0 12px 25px rgba(255, 170, 200, 0.3);
+  transition: 0.3s;
+}
+
+#start-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 28px rgba(255, 150, 200, 0.35);
+}
+
+
+    .nav-btn[disabled] {
+      opacity: 0.45;
+      cursor: default;
+    }
+
+    .nav-btn:not([disabled]):hover {
+      background: #f9e0f0;
+    }
+
+    .key {
+      font-size: 0.72rem;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: #f8e6f4;
+      border: 1px solid #f1c4e0;
+      color: var(--text-soft);
+    }
+
+    /* ========================= */
+/*          INTRO            */
+/* ========================= */
+
+#intro-screen {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #d8c9ea, #f4d8e6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999999;
+  transition: opacity 0.6s ease;
+}
+
+.intro-card {
+  background: rgba(255, 255, 255, 0.18);
+  padding: 44px 60px;
+  border-radius: 26px;
+  backdrop-filter: blur(14px);
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(80, 60, 90, 0.20);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.intro-title {
+  font-size: 1.9rem;
+  color: #4d3a50;
+  margin-bottom: 12px;
+}
+
+.intro-sub {
+  font-size: 1rem;
+  color: #6b556e;
+  line-height: 1.5;
+  margin-bottom: 26px;
+}
+
+.intro-open-btn {
+  border: none;
+  padding: 12px 26px;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  background: linear-gradient(135deg, #f6b1ca, #f8cddd);
+  color: #4d3a50;
+  box-shadow: 0 14px 26px rgba(235,140,170,0.25);
+  transition: 0.25s;
+}
+
+.intro-open-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 32px rgba(235,140,170,0.32);
+}
+
+.intro-pusheen-stamp {
+  width: 100px;
+  opacity: 0.95;
+  display: block;
+  margin: 0 auto 18px auto;   /* centrada + separación debajo */
+}
+
+  </style>
+</head>
+<body>
+  <div class="heart-particles"></div>
+  <div class="bubble-bg">
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+  </div>
+
+<div id="intro-screen">
+  <div class="intro-card">
+
+    <img class="intro-pusheen-stamp" src="intro_pusheen.png" alt="Pusheen pequeñita">
+
+    <h1 class="intro-title">Para vos, en tu cumpleaños 🎂💗</h1>
+
+    <p class="intro-sub">
+      Hice algo para regalarte.  
+      Tocá para abrirlo.
+    </p>
+
+    <button id="start-btn" class="intro-open-btn">
+      Abrir mi regalo 🎀
+    </button>
+
+  </div>
+</div>
+
+
+  <div class="book">
+    <header class="book-header">
+      <div class="book-title-main">
+        <h1><span class="emoji">💘</span> Libro de Pusheen & nosotros</h1>
+        <p>Un libro para el amor de mi vida, hecho con mucho amor (y un poco de código).</p>
+      </div>
+      <div class="page-indicator">
+        <span id="page-counter">Página 1 de 6</span>
+        <div class="dots">
+          <div class="dot active" data-dot="0"></div>
+          <div class="dot" data-dot="1"></div>
+          <div class="dot" data-dot="2"></div>
+          <div class="dot" data-dot="3"></div>
+          <div class="dot" data-dot="4"></div>
+          <div class="dot" data-dot="5"></div>
+        </div>
+      </div>
+    </header>
+
+    <main class="book-main">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-title">Capítulos</div>
+        <ul class="chapter-list">
+          <li>
+            <button class="chapter-btn active" data-page="0">
+              <span class="chapter-bullet"></span>
+              1 · El comienzo
+            </button>
+          </li>
+          <li>
+            <button class="chapter-btn" data-page="1">
+              <span class="chapter-bullet"></span>
+              2 · Pusheen & nuestra música
+            </button>
+          </li>
+          <li>
+            <button class="chapter-btn" data-page="2">
+              <span class="chapter-bullet"></span>
+              3 · Canciones que son momentos
+            </button>
+          </li>
+          <li>
+            <button class="chapter-btn" data-page="3">
+              <span class="chapter-bullet"></span>
+              4 · Fechas especiales
+            </button>
+          </li>
+          <li>
+            <button class="chapter-btn" data-page="4">
+              <span class="chapter-bullet"></span>
+              5 · Momentos
+            </button>
+          </li>
+          <li>
+            <button class="chapter-btn" data-page="5">
+              <span class="chapter-bullet"></span>
+              6 · Final
+            </button>
+          </li>
+        </ul>
+
+        <div class="pusheen-preview">
+          <img src="pusheen1.png" alt="Pusheen" />
+          <p>Esta gatita aparece cada vez que el corazón se me pone en modo tierno gracias a vos. ❤️</p>
+        </div>
+      </aside>
+
+      <!-- Páginas -->
+      <section class="pages">
+        <!-- Página 1 -->
+        <section class="page active" data-page="0">
+          <div class="page-inner">
+            <div>
+              <div class="page-header">
+                <div class="page-tag">Capítulo 1</div>
+                <h2 class="page-title">Antes de que empieces a leer...</h2>
+              </div>
+              <p class="page-text">
+                Hay mil formas distintas de decir <span class="highlight"> “te amo"</span>;
+                con besos, con mensajitos, con musica..
+                Esta vez quise hacerlo con algo que me gusta mucho:
+                <span class="highlight">programar</span>.
+              </p>
+              <p class="page-text soft">
+                Así que convertí lo que siento por vos en este librito.
+                No está impreso, pero vive en la pantalla.
+                Y cada vez que lo abras, quiero que sientas lo mismo que yo siento
+                cuando te veo: calma, ternura y ganas de quedarme.
+              </p>
+              <div class="card-soft">
+                Podés pasar de página con los botoncitos de abajo
+                o con las teclas <strong>←</strong> y <strong>→</strong>.  
+                Y si ves a Pusheen por ahí, es porque la elegí
+                como guardiana oficial de todo esto, porque se que te encanta. 💕
+              </div>
+            </div>
+            <div class="img-frame">
+              <img src="pusheen_donut_ariss.png" alt="Pusheen adorable" />
+              <div class="img-caption">
+                Pusheen sosteniendo todo lo que siento por vos.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Página 2 -->
+        <section class="page" data-page="1">
+          <div class="page-inner">
+            <div>
+              <div class="page-header">
+                <div class="page-tag">Capítulo 2</div>
+                <h2 class="page-title">Nuestra banda sonora</h2>
+              </div>
+              <p class="page-text">
+                Hay artistas que ya no existen solo en Spotify:
+                empezaron a vivir en recuerdos que nunca se borraran.  
+                Elegí algunos para escribir lo que me pasa cuando suenan.
+              </p>
+
+              <div class="pill-row">
+                <!-- Cambiá los nombres por artistas reales -->
+                <button class="artist-pill active" data-artist="a1">SALAS FLACO</button>
+                <button class="artist-pill" data-artist="a2">THE MARIAS</button>
+                <button class="artist-pill" data-artist="a3">LIL PEEP</button>
+                <button class="artist-pill" data-artist="a4">LOLO</button>
+              </div>
+
+              <div class="artist-message" id="artist-message">
+                SALAS FLACO tiene esa mezcla de calma y nostalgia que me hace acordar a la primera vez que hablamos, cuando senti ese golpecito suave en el pecho y pense: "es todo lo que quiero en mi vida" 
+              </div>
+
+              <div class="card-soft">
+                Podés tocar cada artista: el mensajito cambia.
+              </div>
+            </div>
+
+            <div class="pusheen-selector">
+              <div class="img-frame pusheen-main">
+                <img id="pusheen-main-img" src="firststyle.png" alt="Pusheen música" />
+              </div>
+              <p class="soft" style="font-size: 0.8rem;">
+                Elegí qué versión de Pusheen se queda escuchando música con vos:
+              </p>
+              <div class="pusheen-options">
+                <button class="pusheen-thumb active" data-pusheen="1">
+                  <img src="firststyle.png" alt="Pusheen 1" />
+                </button>
+                <button class="pusheen-thumb" data-pusheen="2">
+                  <img src="secondstyle.png" alt="Pusheen 2" />
+                </button>
+                <button class="pusheen-thumb" data-pusheen="3">
+                  <img src="thirdstyle.png" alt="Pusheen 3" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Página 3 -->
+        <section class="page" data-page="2">
+          <div class="page-inner">
+            <div>
+              <div class="page-header">
+                <div class="page-tag">Capítulo 3</div>
+                <h2 class="page-title">Canciones que son momentos</h2>
+              </div>
+              <p class="page-text">
+                Algunas canciones dejaron de ser solo sonidos.
+                Ahora son <span class="highlight">escenas nuestras</span>.
+                Tocá una y te cuento qué recuerdo guarda.
+              </p>
+
+              <div class="memory-list">
+                <!-- Cambiá por canciones/recuerdos reales -->
+                <div class="memory-item" data-memory="m1">
+                  <span>El Palacio · Cerounno</span>
+                  <span class="tag">primer recuerdo</span>
+                </div>
+                <div class="memory-item" data-memory="m2">
+                  <span>Cariño · The Marias</span>
+                  <span class="tag">nuestra historia</span>
+                </div>
+                <div class="memory-item" data-memory="m3">
+                  <span>Yellow · Coldplay</span>
+                  <span class="tag">tu forma de ser</span>
+                </div>
+                <div class="memory-item" data-memory="m4">
+                  <span>Cosas Que No Te Dije · Saiko</span>
+                  <span class="tag">lo que siento</span>
+                </div>
+              </div>
+
+              <p class="memory-text" id="memory-text">
+                El Palacio siempre me va a llevar a ese primer momento en el que te empecé a mostrar mi música y todo coincidió como si ya nos conociéramos de antes. Me acuerdo de que la escuchaste y te gustó al instante, y ahí entendí algo sin decirlo: que compartir canciones con vos iba a ser una de mis cosas favoritas en la vida. Fue la primera que puse, y la primera que sentí nuestra.
+              </p>
+            </div>
+
+            <div class="img-frame">
+              <img src="pusheen_holding.png" alt="Pusheen soñando" />
+              <div class="img-caption">
+                Pusheen guardando todos nuestros recuerdos en su pancita para que nunca se pierdan.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Página 4: Fechas especiales -->
+        <section class="page" data-page="3">
+          <div class="page-inner">
+            <div>
+              <div class="page-header">
+                <div class="page-tag">Capítulo 4</div>
+                <h2 class="page-title">Fechas especiales</h2>
+              </div>
+              <p class="page-text">
+Hay días que no se me borran más, que quedaron guardados como si mi memoria supiera que ahí empezó algo importante. Cada una de estas fechas tiene su propia historia, su propio latido. Y todas, sin excepción, me llevan siempre a vos. 💌
+              </p>
+
+              <div class="timeline">
+                <div class="timeline-item">
+                  <div class="timeline-date">05 · 08 · 2025</div>
+                  <div class="timeline-text">
+                    El primer día que te conocí sentí un sacudón en el pecho que no me dejó tranquilo, una mezcla de ternura y vértigo que me hizo entender que sos todo lo que quiero tener, y sin darme cuenta empezaste a gustarme de una manera tan linda que todavía hoy, cuando me acuerdo de ese momento, siento lo mismo, fue como si mi corazoncito encontro su llave.
+                  </div>
+                </div>
+                <div class="timeline-item">
+                <div class="timeline-date">05 · 10 · 2025</div>
+                <div class="timeline-text">
+                  La primera vez que te hablé molestándote fue porque ya me encantabas, aunque ni yo lo admitiera. Había algo en vos que me daba ganas de joderte un poquito, de hacerte reir, de llamar tu atención como fuera, y cuando me respondiste, sentí ese calorcito lindo en el pecho que solo aparece cuando alguien, inconscientemente, ya te está empezando a importar de verdad.
+                </div>
+              </div>
+                <div class="timeline-item">
+                  <div class="timeline-date">07 · 10 · 2025</div>
+                  <div class="timeline-text">
+                    La primera vez que te escuché fue como si el mundo aflojara un poquito; escuche tu voz con una ternura que me desarmó de adentro para afuera, y en ese instante sentí algo que no me pasó con nadie, esa claridad de reconocer a alguien sin saber por qué, como si tu forma de hablar ya supiera dónde acomodarse en mí.
+                  </div>
+                </div>
+                  <div class="timeline-item">
+                  <div class="timeline-date">05 · 11 · 2025</div>
+                  <div class="timeline-text">
+                    Cuando hicimos esa llamada solos y me enseñaste a crearme una cuenta sentí una tranquilidad tan linda que hasta me daba risa, porque mientras me explicabas todo con esa paciencia tuya pensé que no era solo una llamada ni una cuenta nueva, era un momento nuestro, simple pero perfecto, de esos que después te quedan siempre en la mente como prueba de que con vos todo se vuelve más fácil, más cálido y mas perfecto.
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="timeline-date">08 · 11 · 2025</div>
+                  <div class="timeline-text">
+                    Cuando me mostraste Sienna de The Marías sentí algo raro y hermoso al mismo tiempo, como si tuvieras ganas de abrirme un pedacito de tu mundo, y mientras sonaba esa voz suave pensé que había algo muy especial en que justamente vos me compartieras esa canción, porque en ese momento entendí que no era solo música, era tu forma de decirme que siempre voy a poder abrirme con vos y contarte cualquier cosa, que siempre vas a estar para mi, y sin esperarlo me dejaste un recuerdo que todavia hoy me late adentro, por eso lo plasmo aca.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="img-frame">
+              <img src="pusheen_akma_calendar.png" alt="Pusheen calendario" />
+              <div class="img-caption">
+                Pusheen marcando nuestros días favoritos en su calendario.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Página 5: Momentos chiquitos -->
+        <section class="page" data-page="4">
+          <div class="page-inner">
+            <div>
+              <div class="page-header">
+                <div class="page-tag">Capítulo 5</div>
+                <h2 class="page-title">Momentos chiquitos que amo</h2>
+              </div>
+              <p class="page-text">
+                No solo los buenos días importan.
+                También están esos <span class="highlight">mini momentos</span>
+                que capaz parecen nada, pero para mí son todo.
+              </p>
+
+              <div class="moment-list">
+                <div class="moment-card">
+                  Cuando decis algo muy tonto que te empezas a reir de lo que vos misma dijiste.
+                </div>
+                <div class="moment-card">
+                  Cuando se hace silencio y en vez de ser incómodo,
+                  se siente como "está bien así"
+                </div>
+                <div class="moment-card">
+                  Los mensajes que me mandás sin darte cuenta de
+                  lo mucho que me alegran el día.
+                </div>
+                <div class="moment-card">
+                  Cada vez que hablás de algo que te gusta
+                  y escucho tu hermosa voz.
+                </div>
+                <div class="moment-card">
+                  Cuando te gano en Clash Royale y me haces berrine como niña chiquita, y te tengo que dejar ganar porque no me aguanto.
+                </div>
+                  <div class="moment-card">
+                  Al momento de sincerarte conmigo, y me haces sentir que realmente me entregaste tu corazoncito entero.
+                </div>
+                <div class="moment-card">
+                  Cuando creas apodos para decirme todos los dias, y me enseñas el significado de todos ellos.
+                </div>
+                <div class="moment-card">
+                  Cuando me tratas como a un bebe, me haces sentir demasiado seguro y amado.
+                </div>
+              </div>
+
+              <div class="card-soft" style="margin-top:10px;">
+                Estos son algunos momentos que decidi poner, aunque, realmente todos los momentos con vos se transforman en especiales por el simple hecho de que estoy con vos. 💘
+              </div>
+            </div>
+
+            <div class="img-frame">
+              <img src="pusheen1.png" alt="Pusheen feliz" />
+              <div class="img-caption">
+                Pusheen coleccionando momentos chiquitos en forma de corazones.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Página 6: Final -->
+        <section class="page" data-page="5">
+          <div class="page-inner">
+            <div class="center">
+              <div class="page-header">
+                <div class="page-tag">Capítulo 6</div>
+                <h2 class="page-title">Final que se repite</h2>
+              </div>
+              <p class="page-text">
+                En este capitulo le doy fin al pequeño librito que te hice por tu cumpleaños, este libro, tiene fin si lo decidis vos, pero si decidis que sea eterno, nunca tendra fin. ❤️
+                Si este libro tuviera un botón de "repetir",
+                lo dejaría apretado para que cada tanto vuelvas
+                y recuerdes algo:
+              </p>
+              <p class="page-text">
+                que no sos solo una parte linda de mi vida,
+                <span class="highlight">sos mi parte favorita</span>.
+              </p>
+
+              <button class="big-heart-btn" id="heart-btn">
+                <span>💖</span> Mostrar mensaje secreto
+              </button>
+
+              <div class="secret" id="secret-text">
+                <p>
+                  No sé qué va a pasar dentro de unos meses o años.
+                  Lo que sí sé es que hoy, si pienso en futuro,
+                  te imagino ahí: riéndote de cosas tontas conmigo,
+                  cambiando canciones, abrazando a un gato gordito
+                  (real o imaginario) y haciendo que todo se sienta en su lugar.
+                </p>
+                <p style="margin-top: 6px;">
+                  Quiero que sepas que, incluso en los días que estoy raro,
+                  sigo eligiéndote. Que cuando algo bueno me pasa,
+                  mi reflejo es querer contártelo. Y cuando algo malo aparece,
+                  lo primero que pienso es que con vos se hace más llevadero.
+                </p>
+                <p style="margin-top: 6px;">
+                  Gracias por dejarme quererte así, a mi manera,
+                  incluso con cositas raras como este libro en código. Gracias por quererme asi, aunque a veces me ponga raro por cosas muy tontas.
+                  Te amo muchísimo.
+                </p>
+                <p style="margin-top: 6px;">
+                  - Alejo, tu wawa 🐱💗
+                </p>
+              </div>
+            </div>
+
+            <div class="img-frame">
+              <img src="pusheen2.png" alt="Pusheen con corazón" />
+              <div class="img-caption">
+                Si Pusheen pudiera hablar, te diría exactamente lo mismo que yo: qué suerte tengo de tenerte.
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="book-footer">
+      <span>Usá las flechas del teclado o los botones para leer todo el libro.</span>
+      <div class="nav-buttons">
+        <button class="nav-btn" id="prev-btn">
+          ◀ Anterior
+          <span class="key">←</span>
+        </button>
+        <button class="nav-btn" id="next-btn">
+          <span class="key">→</span>
+          Siguiente ▶
+        </button>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Navegación de páginas
+    const pages = Array.from(document.querySelectorAll(".page"));
+    const dots = Array.from(document.querySelectorAll(".dot"));
+    const chapterBtns = Array.from(document.querySelectorAll(".chapter-btn"));
+    const pageCounter = document.getElementById("page-counter");
+    const prevBtn = document.getElementById("prev-btn");
+    const nextBtn = document.getElementById("next-btn");
+
+    let currentPage = 0;
+
+    function updatePage() {
+      pages.forEach((p, i) => p.classList.toggle("active", i === currentPage));
+      dots.forEach((d, i) => d.classList.toggle("active", i === currentPage));
+      chapterBtns.forEach((b, i) => b.classList.toggle("active", i === currentPage));
+      pageCounter.textContent = `Página ${currentPage + 1} de ${pages.length}`;
+      prevBtn.disabled = currentPage === 0;
+      nextBtn.disabled = currentPage === pages.length - 1;
+    }
+
+    function goToPage(index) {
+      if (index < 0 || index >= pages.length) return;
+      currentPage = index;
+      updatePage();
+    }
+
+    prevBtn.addEventListener("click", () => goToPage(currentPage - 1));
+    nextBtn.addEventListener("click", () => goToPage(currentPage + 1));
+
+    chapterBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        goToPage(Number(btn.dataset.page) || 0);
+      });
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") goToPage(currentPage + 1);
+      if (e.key === "ArrowLeft") goToPage(currentPage - 1);
+    });
+
+    // Artistas – mensajes
+    const artistPills = Array.from(document.querySelectorAll(".artist-pill"));
+    const artistMessage = document.getElementById("artist-message");
+
+    const artistTexts = {
+      a1: 'SALAS FLACO tiene esa mezcla de calma y nostalgia que me hace acordar a la primera vez que hablamos, cuando senti ese golpecito suave en el pecho y pense: "es todo lo que quiero en mi vida"',
+      a2: "THE MARIAS me recuerda a vos porque tiene esa suavidad que abraza, esa luz que calma, esa mezcla de nostalgia y ternura que siento cada vez que hablamos y entiendo, sin decir nada, que mi mundo es más hermoso desde que existís.",
+      a3: "LIL PEEP me hace pensar en vos porque tiene esa mezcla de fragilidad y fuego, de tristeza linda y cariño sincero, esa sensación de que incluso en los días grises hay un lugar donde todo duele un poco menos, y ese lugar siempre, sin querer, termina siendo vos.",
+      a4: "LOLO me lleva directo a vos porque tiene esa energía nuestra, esa felicidad suave que aparece cuando estamos juntos haciendo cualquier cosa, esa sensación de que todo funciona sin esfuerzo, y cada vez que suena siento que el mundo se acomoda un poquito para recordarme lo simple y hermoso que es quererte."
+    };
+
+    artistPills.forEach((pill) => {
+      pill.addEventListener("click", () => {
+        const key = pill.dataset.artist;
+
+        // cambiar el estilo activo
+        artistPills.forEach((p) => p.classList.remove("active"));
+        pill.classList.add("active");
+
+        // animación: fade out → cambiar texto → fade in
+        artistMessage.classList.remove("fade-in");
+        artistMessage.classList.add("fade-out");
+
+        setTimeout(() => {
+          artistMessage.textContent = artistTexts[key];
+          artistMessage.classList.remove("fade-out");
+          artistMessage.classList.add("fade-in");
+        }, 350); // coincide con el tiempo de la animación CSS
+      });
+    });
+
+
+    // Selector de Pusheen
+// Selector de Pusheen (versión música)
+      const pusheenThumbs = Array.from(document.querySelectorAll(".pusheen-thumb"));
+      const pusheenMainImg = document.getElementById("pusheen-main-img");
+
+      const pusheenStyles = {
+        1: "firststyle.png",
+        2: "secondstyle.png",
+        3: "thirdstyle.png"
+      };
+
+      pusheenThumbs.forEach((thumb) => {
+        thumb.addEventListener("click", () => {
+          const id = thumb.dataset.pusheen;
+          pusheenThumbs.forEach((t) => t.classList.remove("active"));
+          thumb.classList.add("active");
+
+          // Nueva línea – usa tus archivos
+          pusheenMainImg.classList.remove("pusheen-animate"); 
+          void pusheenMainImg.offsetWidth; // fuerza reinicio de animación
+          pusheenMainImg.src = pusheenStyles[id];
+          pusheenMainImg.classList.add("pusheen-animate");
+        });
+      });
+
+
+    // Memorias/canciones
+    const memoryItems = Array.from(document.querySelectorAll(".memory-item"));
+    const memoryText = document.getElementById("memory-text");
+
+    const memoryMap = {
+      m1: "El Palacio siempre me va a llevar a ese primer momento en el que te empecé a mostrar mi música y todo coincidió como si ya nos conociéramos de antes. Me acuerdo de que la escuchaste y te gustó al instante, y ahí entendí algo sin decirlo: que compartir canciones con vos iba a ser una de mis cosas favoritas en la vida. Fue la primera que puse, y la primera que sentí nuestra.",
+      m2: "Cariño siempre me hace pensar en nosotros, en la forma en que todo se fue dando despacito y con una ternura que no esperaba, como si cada palabra, cada tema de conversacion y cada noche nuestra fueran armando una historia imposible de inventar, una historia que solo podía pasar con vos, porque tenés esa calma y esa luz que hacen que todo se sienta más simple, más lindo y un poquito más eterno.",
+      m3: "Yellow me hace pensar en tu forma de ser, en esa luz tranquila que tenés sin darte cuenta, esa manera tuya de hacer todo perfecto sin saberlo, como si cada accion, cada risa y cada detalle tuyo alegraran el día un poquito más, y por eso, cada vez que suena, no escucho solo la canción: escucho tu voz, y tu risa hermosa paseando por mi mente.",
+      m4: "Esta cancion me hace pensar en todo lo que todavía nos queda por vivir, en ese futuro que imagino con vos aunque lo diga todo el tiempo, porque hay algo en la forma en que me escribis, en cómo me hablás y en lo que me hacés sentir que me hace querer quedarme esta y mil vidas mas, crecer y armar algo lindo a tu lado, seguro, demostrando todo el amor que sentimos por el otro."
+    };
+
+    memoryItems.forEach((item) => {
+      item.addEventListener("click", () => {
+        const key = item.dataset.memory;
+
+        memoryItems.forEach((i) => i.classList.remove("active"));
+        item.classList.add("active");
+
+        // Animación del texto
+        memoryText.classList.remove("fade-in");
+        memoryText.classList.add("fade-out");
+
+        setTimeout(() => {
+          memoryText.textContent = memoryMap[key];
+          memoryText.classList.remove("fade-out");
+          memoryText.classList.add("fade-in");
+        }, 300);
+      });
+    });
+
+
+    // Mensaje secreto final
+    const heartBtn = document.getElementById("heart-btn");
+    const secretText = document.getElementById("secret-text");
+
+    heartBtn.addEventListener("click", () => {
+      secretText.classList.toggle("visible");
+    });
+
+/* ============================= */
+/* INTRO: Música + typing effect */
+/* ============================= */
+
+    const intro = document.getElementById("intro-screen");
+    const startBtn = document.getElementById("start-btn");
+
+    // Música suave
+    const audio = new Audio("music.mp3");
+    audio.loop = true;
+
+    startBtn.addEventListener("click", () => {
+      audio.play();
+
+      intro.style.opacity = "0";
+      setTimeout(() => {
+        intro.style.display = "none";
+      }, 600);
+    });
+
+    updatePage();
+  </script>
+</body>
+</html>
